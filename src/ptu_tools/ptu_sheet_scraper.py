@@ -8,7 +8,7 @@ from src import response_formatter
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
 DICT_FILE = os.path.join(dir_path, "ptu_spread_cells.json")
-SERVICE_ACCT_FILE = os.path.join(dir_path, "..", "..", "credentials", "google_api_credentials.json")
+GOOGLE_CREDENTIALS = json.loads(os.getenv("GOOGLE_API_CREDENTIALS"))
 TRAINER_SHEET = "Trainer"
 COMBAT_SHEET = "Combat"
 
@@ -63,7 +63,7 @@ def __check_stat_name__(stat_name):
 
 class PtuSheetScraper:
     def __init__(self):
-        self.gc = gspread.service_account(filename=SERVICE_ACCT_FILE)
+        self.gc = gspread.service_account_from_dict(GOOGLE_CREDENTIALS)
 
         with open(DICT_FILE, 'r') as file:
             self.cells = json.loads(file.read())
