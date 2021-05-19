@@ -14,6 +14,6 @@ https://discord.com/api/oauth2/authorize?client_id=836726415016984586&permission
 
 ## How to use
 * To add a spreadsheet, a player must first share the spreadsheet in Google Drive with ptu-spreadsheet-bot@arceusbot-312120.iam.gserviceaccount.com
-* Then link the sheet with your discord account by calling this command in your server: "*link [spreadsheet name]" where the spreadsheet name is the name of your document in
+* Then link the sheet with your discord account by calling this command in your server: "*spreadsheet [spreadsheet name]" where the spreadsheet name is the name of your document in
 Google Drive
 * Note that the worksheet name for each pokemon should be the same as their chosen name
