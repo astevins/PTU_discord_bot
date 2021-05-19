@@ -5,17 +5,17 @@ import boto3
 from dotenv import load_dotenv
 
 load_dotenv()
-ACCESS_ID = os.getenv('AWS_ACCESS_ID')
-SECRET_KEY = os.getenv('AWS_SECRET_ACCESS')
+ACCESS_ID = os.getenv("AWS_ACCESS_ID")
+SECRET_KEY = os.getenv("AWS_SECRET_ACCESS")
 
 
 def __get_db_resource__():
-    return boto3.resource('dynamodb', region_name='us-west-2', aws_access_key_id=ACCESS_ID,
+    return boto3.resource("dynamodb", region_name="us-west-2", aws_access_key_id=ACCESS_ID,
                           aws_secret_access_key=SECRET_KEY)
 
 
 def __get_db_client__():
-    return boto3.client('dynamodb', region_name='us-west-2', aws_access_key_id=ACCESS_ID,
+    return boto3.client("dynamodb", region_name="us-west-2", aws_access_key_id=ACCESS_ID,
                         aws_secret_access_key=SECRET_KEY)
 
 
@@ -36,19 +36,19 @@ def create_table_if_new(table_name):
             TableName=table_name,
             KeySchema=[
                 {
-                    'AttributeName': 'id',
-                    'KeyType': 'HASH'
+                    "AttributeName": "id",
+                    "KeyType": "HASH"
                 },
             ],
             AttributeDefinitions=[
                 {
-                    'AttributeName': 'id',
-                    'AttributeType': 'S'
+                    "AttributeName": "id",
+                    "AttributeType": "S"
                 },
             ],
             ProvisionedThroughput={
-                'ReadCapacityUnits': 1,
-                'WriteCapacityUnits': 1,
+                "ReadCapacityUnits": 1,
+                "WriteCapacityUnits": 1,
             }
         )
         print(f"Creating table [{table_name}]")
@@ -56,7 +56,7 @@ def create_table_if_new(table_name):
         print(f"Table [{table_name}] already exists")
         return
 
-    table.meta.client.get_waiter('table_exists').wait(TableName=table_name)
+    table.meta.client.get_waiter("table_exists").wait(TableName=table_name)
     print(f"Finished creating table [{table_name}]")
 
 
