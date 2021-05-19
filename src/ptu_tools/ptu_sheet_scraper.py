@@ -1,12 +1,14 @@
 from collections import OrderedDict
-
 import gspread
 import json
+import os
 
 from src import response_formatter
 
-DICT_FILE = "ptu_spread_cells.json"
-SERVICE_ACCT_FILE = "../../arceusbot-312120-d7eb807fcd92.json"
+dir_path = os.path.dirname(os.path.realpath(__file__))
+
+DICT_FILE = os.path.join(dir_path, "ptu_spread_cells.json")
+SERVICE_ACCT_FILE = os.path.join(dir_path, "..", "..", "credentials", "google_api_credentials.json")
 TRAINER_SHEET = "Trainer"
 COMBAT_SHEET = "Combat"
 
@@ -154,4 +156,3 @@ class PtuSheetScraper:
             raise InvalidInput("Invalid worksheet name; did you enter a pokemon name incorrectly?")
 
         return worksheet
-

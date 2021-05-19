@@ -13,9 +13,10 @@ def __get_db_resource__():
     return boto3.resource('dynamodb', region_name='us-west-2', aws_access_key_id=ACCESS_ID,
                           aws_secret_access_key=SECRET_KEY)
 
+
 def __get_db_client__():
     return boto3.client('dynamodb', region_name='us-west-2', aws_access_key_id=ACCESS_ID,
-                          aws_secret_access_key=SECRET_KEY)
+                        aws_secret_access_key=SECRET_KEY)
 
 
 def __delete_old_table__(table_name):
@@ -25,6 +26,7 @@ def __delete_old_table__(table_name):
     waiter = dynamodb_client.get_waiter("table_not_exists")
     waiter.wait(TableName=table_name)
     create_table_if_new(table_name)
+
 
 def create_table_if_new(table_name):
     dynamodb = __get_db_resource__()

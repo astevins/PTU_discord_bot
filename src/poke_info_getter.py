@@ -3,6 +3,7 @@ import pokepy
 
 from response_formatter import dict_to_str
 
+
 # class MoveList:
 
 # class BaseStats:
@@ -66,4 +67,3 @@ class PokeInfoGetter:
             raise InvalidRequest("Invalid pokemon name.")
 
         return poke
-

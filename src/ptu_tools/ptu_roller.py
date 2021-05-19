@@ -1,8 +1,7 @@
 from collections import OrderedDict
-
-import ptu_sheet_scraper
 import dice
 
+from src.ptu_tools import ptu_sheet_scraper
 from src import response_formatter
 
 

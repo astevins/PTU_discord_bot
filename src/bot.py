@@ -1,15 +1,13 @@
 import os
-
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
-
 import dynamo_db_tools
 import poke_info_getter
 from src.ptu_tools import ptu_sheet_scraper, ptu_member_info_tool, ptu_roller
 
 load_dotenv()
-TOKEN = os.getenv('DISCORD_TOKEN')
+TOKEN = os.getenv("DISCORD_TOKEN")
 PFX = "*"
 
 
@@ -25,6 +23,7 @@ def setIntents():
 bot = commands.Bot(intents=setIntents(), command_prefix=PFX)
 pi = poke_info_getter.PokeInfoGetter()
 
+
 @bot.event
 async def on_ready():
     print(f'{bot.user.name} has connected to Discord!')
@@ -35,12 +34,12 @@ async def on_ready():
 
 @bot.event
 async def on_member_join(member):
-    print(f'{member.name} has joined the server!')
+    print(f"{member.name} has joined the server!")
     await member.create_dm()
-    await member.dm_channel.send(f'Hi {member.name}, welcome to the world of Pokemon!')
+    await member.dm_channel.send(f"Hi {member.name}, welcome to the world of Pokemon!")
 
 
-@bot.command(name="pic", help="!pic [pokemon name]: gets sprite")
+@bot.command(name="pic", help="*pic [pokemon name]: gets sprite")
 async def pic(context, *args):
     shiny = False
     mega = False
@@ -51,7 +50,7 @@ async def pic(context, *args):
         mega = True
     for arg in args:
         if not arg.lower() == "shiny" and not arg.lower() == "mega":
-            name = arg
+            name = arg.lower()
             break
 
     try:
@@ -61,7 +60,7 @@ async def pic(context, *args):
     await context.send(response)
 
 
-@bot.command(name="skill", help="!skill [skill] for trainer OR !skill [pokemon name] [skill]")
+@bot.command(name="skill", help="*skill [skill] for trainer OR *skill [pokemon name] [skill]")
 async def roll(context, *args):
     guild_id = context.guild.id
     sender = context.message.author
@@ -91,7 +90,7 @@ async def roll(context, *args):
     await context.send(response)
 
 
-@bot.command(name="stat", help="!stat [stat] for trainer OR !stat [pokemon name] [stat]")
+@bot.command(name="stat", help="*stat [stat] for trainer OR *stat [pokemon name] [stat]")
 async def stat(context, *args):
     guild_id = context.guild.id
     sender = context.message.author
@@ -121,7 +120,7 @@ async def stat(context, *args):
     await context.send(response)
 
 
-@bot.command(name="stats", help="!stats for trainer OR !stats [pokemon name]")
+@bot.command(name="stats", help="*stats for trainer OR *stats [pokemon name]")
 async def stats(context, *args):
     guild_id = context.guild.id
     sender = context.message.author
@@ -150,7 +149,7 @@ async def stats(context, *args):
     await context.send(response)
 
 
-@bot.command(name="attack", help="!attack [move] for trainer OR !attack [pokemon name] [move]")
+@bot.command(name="attack", help="*attack [move] for trainer OR *attack [pokemon name] [move]")
 async def stats(context, *args):
     guild_id = context.guild.id
     sender = context.message.author
@@ -178,7 +177,7 @@ async def stats(context, *args):
     await context.send(response)
 
 
-@bot.command(name="spreadsheet", help="!spreadsheet [spreadsheet name]: links spreadsheet to user")
+@bot.command(name="spreadsheet", help="*spreadsheet [spreadsheet name]: links spreadsheet to user")
 async def spreadsheet(context, spread_name):
     guild_id = context.guild.id
     sender = context.message.author
