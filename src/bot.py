@@ -149,8 +149,8 @@ async def stats(context, *args):
     await context.send(response)
 
 
-@bot.command(name="attack", help="*attack [move] for trainer OR *attack [pokemon name] [move]")
-async def stats(context, *args):
+@bot.command(name="move", help="*move [move name] for trainer OR *move [pokemon name] [move name]")
+async def move(context, *args):
     guild_id = context.guild.id
     sender = context.message.author
 

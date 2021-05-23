@@ -4,6 +4,7 @@ import dice
 from src.ptu_tools import ptu_sheet_scraper
 from src import response_formatter
 
+NULL_COLL = "--";
 
 def roll_trainer_skill(file, skill_name):
     sheet_scraper = ptu_sheet_scraper.get_instance()
@@ -28,14 +29,20 @@ def roll_trainer_attack(file, move_name):
 def __roll_attack__(file, sheet, move_name):
     result = OrderedDict()
     sheet_scraper = ptu_sheet_scraper.get_instance()
+
+    move_name = move_name.lower()
     ac = sheet_scraper.get_move_ac(file, sheet, move_name)
     acc_roll = __roll_total_only__("d20")
-    result["Move AC"] = ac
-    result["Accuracy Roll"] = acc_roll
+    if not ac == NULL_COLL:
+        result["Move AC"] = ac
+        result["Accuracy Roll"] = acc_roll
     to_roll = sheet_scraper.get_move_dmg_roll(file, sheet, move_name)
-    dmg_roll = __roll__(to_roll)
-    result["Damage Dice"] = dmg_roll["Rolled"]
-    result["Damage Roll"] = f"{dmg_roll['Result']} = {dmg_roll['Total']}"
+    if to_roll == NULL_COLL:
+        result["Effects"] = sheet_scraper.get_move_effect(file, sheet, move_name)
+    else:
+        dmg_roll = __roll__(to_roll)
+        result["Damage Dice"] = dmg_roll["Rolled"]
+        result["Damage Roll"] = f"{dmg_roll['Result']} = {dmg_roll['Total']}"
     return response_formatter.dict_to_str(result)
 
 

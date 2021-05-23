@@ -122,6 +122,10 @@ class PtuSheetScraper:
         modifier = self.__get_cell_value_row_col__(file, sheet, cell.row, cell.col + 6)
         return base if modifier == "--" else f"{base}+{modifier}"
 
+    def get_move_effect(self, file, sheet, move_name):
+        cell = self.__get_move_cell__(file, sheet, move_name)
+        return self.__get_cell_value_row_col__(file, sheet, cell.row, cell.col + 11)
+
     def __get_move_cell__(self, file, sheet, move_name):
         move_name = move_name.lower().title()
         try:
