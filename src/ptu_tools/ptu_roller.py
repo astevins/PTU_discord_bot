@@ -23,7 +23,7 @@ def roll_poke_attack(file, poke_name, move_name):
 
 
 def roll_trainer_attack(file, move_name):
-    return __roll_attack__(file, ptu_sheet_scraper.TRAINER_SHEET, move_name)
+    return __roll_attack__(file, ptu_sheet_scraper.COMBAT_SHEET, move_name)
 
 
 def __roll_attack__(file, sheet, move_name):
