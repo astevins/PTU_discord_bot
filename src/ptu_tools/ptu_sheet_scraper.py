@@ -12,8 +12,8 @@ GOOGLE_CREDENTIALS = json.loads(os.getenv("GOOGLE_API_CREDENTIALS"))
 TRAINER_SHEET = "Trainer"
 COMBAT_SHEET = "Combat"
 
-STATS = ["max hp", "curr hp", "atk", "def", "satk", "sdef", "spd"]
-ALT_STATS = {"max_hp": "max hp", "current hp": "curr hp", "current_hp": "curr hp",
+STATS = ["level", "max hp", "curr hp", "atk", "def", "satk", "sdef", "spd"]
+ALT_STATS = {"lvl": "level", "max_hp": "max hp", "current hp": "curr hp", "current_hp": "curr hp",
              "curr_hp": "curr hp", "attack": "atk", "defense": "def", "special attack": "satk",
              "special defense": "sdef", "speed": "spd"}
 SKILLS = ["acrobatics", "athletics", "charm", "combat",
@@ -22,7 +22,7 @@ SKILLS = ["acrobatics", "athletics", "charm", "combat",
           "intuition", "perception", "stealth", "survival"]
 ALT_SKILLS = {"pokemon ed": "poke ed", "technology ed": "tech ed"}
 
-STATS_FORMATTED = ["Max HP", "Curr HP", "ATK", "DEF", "SATK", "SDEF", "SPD"]
+STATS_FORMATTED = ["Level", "Max HP", "Curr HP", "Atk", "Def", "SAtk", "SDef", "Spd"]
 SKILLS_FORMATTED = ["Acrobatics", "Athletics", "Charm", "Combat",
                     "Command", "General Ed", "Medicine Ed", "Occult Ed",
                     "Poke Ed", "Tech Ed", "Focus", "Guile", "Intimidate",

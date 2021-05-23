@@ -1,5 +1,6 @@
 {
   "trainer name": "A2",
+  "trainer level": "G2",
   "trainer max hp": "H2",
   "trainer curr hp": "G1",
   "trainer atk": "G5",
@@ -24,6 +25,7 @@
   "trainer perception": "F27",
   "trainer stealth": "F28",
   "trainer survival": "F29",
+  "poke level": "B2",
   "poke max hp": "J6",
   "poke curr hp": "M6",
   "poke atk": "I7",
