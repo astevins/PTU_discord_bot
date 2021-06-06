@@ -17,7 +17,7 @@ ALT_STATS = {"lvl": "level", "max_hp": "max hp", "current hp": "curr hp", "curre
              "curr_hp": "curr hp", "attack": "atk", "defense": "def", "special attack": "satk",
              "special defense": "sdef", "speed": "spd"}
 SKILLS = ["acrobatics", "athletics", "charm", "combat",
-          "command", "general dd", "medicine ed", "occult ed",
+          "command", "general ed", "medicine ed", "occult ed",
           "poke ed", "tech ed", "focus", "guile", "intimidate",
           "intuition", "perception", "stealth", "survival"]
 ALT_SKILLS = {"pokemon ed": "poke ed", "technology ed": "tech ed"}
@@ -139,6 +139,10 @@ class PtuSheetScraper:
     def __get_cell_value__(self, file, sheet, cell):
         worksheet = self.__get_worksheet__(file, sheet)
         return worksheet.acell(cell).value
+
+    def __get_range__(self, file, sheet, a_range):
+        worksheet = self.__get_worksheet__(file, sheet)
+        return worksheet.get(a_range)
 
     def __get_cell_value_row_col__(self, file, sheet, row, col):
         worksheet = self.__get_worksheet__(file, sheet)
