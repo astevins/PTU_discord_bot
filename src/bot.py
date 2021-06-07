@@ -39,8 +39,27 @@ async def on_member_join(member):
     await member.dm_channel.send(f"Hi {member.name}, welcome to the world of Pokemon!")
 
 
-@bot.command(name="pic", help="*pic [pokemon name]: gets sprite")
+@bot.command(name="pic", help="*pic [pokemon name]: gets official artwork")
 async def pic(context, *args):
+    mega = False
+    name = ""
+    if "mega" in args:
+        mega = True
+    for arg in args:
+        if not arg.lower() == "mega":
+            name = arg.lower()
+            break
+
+    try:
+        response = pi.poke_pic(name, mega)
+    except Exception as e:
+        print(e)
+        response = "Invalid pokemon name"
+    await context.send(response)
+
+
+@bot.command(name="sprite", help="*sprite [pokemon name]: gets sprite")
+async def sprite(context, *args):
     shiny = False
     mega = False
     name = ""
@@ -54,9 +73,28 @@ async def pic(context, *args):
             break
 
     try:
-        response = pi.poke_pic(name, shiny, mega)
+        response = pi.poke_sprite(name, shiny, mega)
     except:
         response = "Invalid pokemon name"
+    await context.send(response)
+
+
+@bot.command(name="type", help="*type [pokemon name]: gives pokemon type(s)")
+async def type(context, *args):
+    mega = False
+    name = ""
+    if "mega" in args:
+        mega = True
+    for arg in args:
+        if not arg.lower() == "mega":
+            name = arg.lower()
+            break
+
+    try:
+        response = pi.poke_types(name, mega)
+    except poke_info_getter.InvalidRequest as err:
+        response = f"Error:{err}"
+
     await context.send(response)
 
 
