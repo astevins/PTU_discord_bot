@@ -1,4 +1,3 @@
-import json
 from collections import OrderedDict
 import pokepy
 import requests
@@ -13,6 +12,11 @@ class InvalidRequest(Exception):
     pass
 
 
+def __is_requested_dex_entry__(flavor_text, version):
+    return ((flavor_text.version.name == version or not version)
+            and flavor_text.language.name == 'en')
+
+
 class PokeInfoGetter:
     def __init__(self):
         self.client = pokepy.V2Client()
@@ -20,12 +24,24 @@ class PokeInfoGetter:
     def poke_types(self, name, mega):
         poke = self.__get_poke__(name, mega)
 
-        overview = OrderedDict()
-        overview["Name"] = poke.name
+        response = OrderedDict()
         types = [entry.type.name for entry in poke.types]
-        overview["Type"] = "/".join(types)
+        response["Type"] = "/".join(types)
 
-        return dict_to_str(overview)
+        return dict_to_str(response)
+
+    def poke_dex(self, name, version=None):
+        poke = self.__get_poke__(name, mega=False, species=True)
+
+        response = OrderedDict()
+
+        for flavor_text in poke.flavor_text_entries:
+            if __is_requested_dex_entry__(flavor_text, version):
+                text = flavor_text.flavor_text.replace('\n', ' ')
+                response[flavor_text.version.name] = text
+                return dict_to_str(response)
+
+        raise InvalidRequest(f"No dex entry found for version: {version}")
 
     def poke_sprite(self, name, shiny=False, mega=False):
         poke = self.__get_poke__(name, mega)
@@ -48,13 +64,16 @@ class PokeInfoGetter:
             stats[entry.stat.name.title()] = entry.base_stat
         return dict_to_str(stats)
 
-    def __get_poke__(self, name, mega):
+    def __get_poke__(self, name, mega, species=False):
         try:
             if mega:
                 name = f"{name}-mega"
-            pokes = self.client.get_pokemon(name)
-            poke = pokes[0]
-        except:
-            raise InvalidRequest("Invalid pokemon name.")
+            if species:
+                poke = self.client.get_pokemon_species(name)
+            else:
+                poke = self.client.get_pokemon(name)
+        except Exception as e:
+            print(e)
+            raise InvalidRequest(f"Invalid pokemon name: {name}")
 
         return poke

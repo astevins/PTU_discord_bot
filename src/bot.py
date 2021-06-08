@@ -98,6 +98,32 @@ async def type(context, *args):
     await context.send(response)
 
 
+@bot.command(name="dex", help="*dex [pokemon name]: gives pokemon dex entry")
+async def dex(context, *args):
+    name = None
+    version = None
+    for arg in args:
+        if not name:
+            name = arg.lower()
+        else:
+            version = arg.lower()
+            break
+
+    try:
+        response = pi.poke_dex(name, version)
+    except poke_info_getter.InvalidRequest as err:
+        response = f"Error:{err}"
+
+    await context.send(response)
+
+
+@bot.command(name="info", help="*info [pokemon name]: gives pokemon picture, type, and flavor text")
+async def info(context, *args):
+    await sprite(context, *args)
+    await type(context, *args)
+    await dex(context, *args)
+
+
 @bot.command(name="skill", help="*skill [skill] for trainer OR *skill [pokemon name] [skill]")
 async def roll(context, *args):
     guild_id = context.guild.id

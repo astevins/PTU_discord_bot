@@ -1,6 +1,6 @@
 .env
 
-src/bot_informal.py
+informal_src/
 quarantine.py
 
 /venv

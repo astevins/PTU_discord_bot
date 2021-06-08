@@ -4,7 +4,8 @@ import dice
 from src.ptu_tools import ptu_sheet_scraper
 from src import response_formatter
 
-NULL_COLL = "--";
+NULL_COLL = "--"
+
 
 def roll_trainer_skill(file, skill_name):
     sheet_scraper = ptu_sheet_scraper.get_instance()
