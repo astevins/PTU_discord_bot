@@ -58,8 +58,14 @@ async def pic(context, *args):
     await context.send(response)
 
 
-@bot.command(name="sprite", help="*sprite [pokemon name]: gets sprite")
-async def sprite(context, *args):
+class CommandArgs:
+    def __init__(self, shiny=False, mega=False, name=""):
+        self.shiny = shiny
+        self.mega = mega
+        self.name = name
+
+
+def __parse_args__(args) -> CommandArgs:
     shiny = False
     mega = False
     name = ""
@@ -72,26 +78,26 @@ async def sprite(context, *args):
             name = arg.lower()
             break
 
+    return CommandArgs(shiny=shiny, mega=mega, name=name)
+
+
+@bot.command(name="sprite", help="*sprite [pokemon name]: gets sprite")
+async def sprite(context, *args):
+    parsed_args: CommandArgs = __parse_args__(args)
+
     try:
-        response = pi.poke_sprite(name, shiny, mega)
+        response = pi.poke_sprite(parsed_args.name, parsed_args.shiny, parsed_args.mega)
     except:
         response = "Invalid pokemon name"
     await context.send(response)
 
 
 @bot.command(name="type", help="*type [pokemon name]: gives pokemon type(s)")
-async def type(context, *args):
-    mega = False
-    name = ""
-    if "mega" in args:
-        mega = True
-    for arg in args:
-        if not arg.lower() == "mega":
-            name = arg.lower()
-            break
+async def type_(context, *args):
+    parsed_args: CommandArgs = __parse_args__(args)
 
     try:
-        response = pi.poke_types(name, mega)
+        response = pi.poke_types(parsed_args.name, parsed_args.mega)
     except poke_info_getter.InvalidRequest as err:
         response = f"Error:{err}"
 
@@ -120,7 +126,7 @@ async def dex(context, *args):
 @bot.command(name="info", help="*info [pokemon name]: gives pokemon picture, type, and flavor text")
 async def info(context, *args):
     await sprite(context, *args)
-    await type(context, *args)
+    await type_(context, *args)
     await dex(context, *args)
 
 
